@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Paleta ===== */
+:root{
+  --bg: 15 16 20;        /* casi negro */
+  --fg: 236 238 242;     /* blanco grisáceo */
+  --muted: 160 165 175;  /* gris medio */
+  --card: 26 28 34;      /* gris oscuro */
+  --accent: 120 162 255; /* azul suave */
+}
+
+html, body { height: 100%; }
+body{
+  background: rgb(var(--bg));
+  color: rgb(var(--fg));
+  font-feature-settings: "liga" 1, "calt" 1;
+}
+
+/* contenedor */
+.container { @apply max-w-6xl mx-auto px-4; }
+
+/* cards con look del ejemplo */
+.page-card{
+  @apply rounded-3xl border border-white/10 overflow-hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
+}
+
+/* tarjetas internas */
+.card{
+  background: rgb(var(--card));
+  border: 1px solid rgba(255,255,255,0.08);
+  @apply rounded-2xl p-5;
+}
+
+/* botones */
+.btn {
+  @apply inline-flex items-center gap-2 rounded-xl px-4 py-2 border text-sm;
+  border-color: rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+}
+.btn:hover { background: rgba(255,255,255,0.1); }
+
+.btn-accent {
+  background: rgb(var(--accent));
+  color: #0b1020;
+  border: none;
+}
+.btn-accent:hover { filter: brightness(.95); }
+
+/* badges */
+.badge{
+  @apply rounded-full text-[11px] px-2.5 py-1;
+  background: rgba(120,162,255,.12);
+  border: 1px solid rgba(120,162,255,.3);
+  color: rgb(var(--fg));
+}
+
+/* títulos */
+.section-title{ @apply text-3xl md:text-4xl mb-4 font-semibold; letter-spacing:-.02em; }
+
+/* hr sutil */
+.hr { height:1px; background:rgba(255,255,255,.08); }

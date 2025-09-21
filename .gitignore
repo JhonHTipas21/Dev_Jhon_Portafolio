@@ -1,0 +1,10 @@
+# crea/actualiza .gitignore
+@"
+node_modules/
+.next/
+dist/
+out/
+.vercel/
+.env*
+*.local
+"@ | Set-Content -Encoding UTF8 .gitignore

@@ -1,0 +1,59 @@
+{
+	"name": "portafolio-dev",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Portafolio de proyectos de Jhon Harvey Tipas Solís",
+	"author": "Jhon Harvey Tipas Solís",
+	"license": "MIT",
+	"main": "index.js",
+	"directories": {
+		"lib": "lib"
+	},
+	"scripts": {
+		"dev": "next dev -p 3000",
+		"build": "next build",
+		"start": "next start -p 3000",
+		"lint": "next lint",
+		"format": "prettier --write .",
+		"typecheck": "tsc --noEmit",
+		"prepare": "husky install"
+	},
+	"dependencies": {
+		"@octokit/rest": "^22.0.0",
+		"@tanstack/react-query": "^5.89.0",
+		"clsx": "^2.1.1",
+		"framer-motion": "^12.23.16",
+		"lucide-react": "^0.544.0",
+		"next": "^15.5.3",
+		"next-seo": "^6.8.0",
+		"plausible-tracker": "^0.3.9",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1"
+	},
+	"devDependencies": {
+		"@types/node": "^24.5.2",
+		"@types/react": "^19.1.13",
+		"@typescript-eslint/eslint-plugin": "^8.44.0",
+		"@typescript-eslint/parser": "^8.44.0",
+		"autoprefixer": "^10.4.21",
+		"eslint": "^9.36.0",
+		"eslint-config-next": "^15.5.3",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.1.6",
+		"postcss": "^8.5.6",
+		"prettier": "^3.6.2",
+		"tailwindcss": "^3.4.17",
+		"typescript": "^5.9.2"
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx,json,css,md}": [
+			"prettier --write"
+		]
+	},
+	"keywords": [
+		"portfolio",
+		"nextjs",
+		"react",
+		"tailwindcss"
+	]
+}
