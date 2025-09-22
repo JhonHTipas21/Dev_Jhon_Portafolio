@@ -33,11 +33,10 @@ type RepoAPI = {
 };
 
 const octokit = new Octokit({
-  auth: process.env.GITHUB_TOKEN || undefined, // opcional (para aumentar rate limit)
+  auth: process.env.GITHUB_TOKEN || undefined, // opcional para subir rate limit
   request: { fetch: globalThis.fetch },
 });
 
-/** Mapea el objeto de la API al tipo interno */
 function mapRepo(r: RepoAPI): Repo {
   return {
     id: r.id,
@@ -55,18 +54,20 @@ function mapRepo(r: RepoAPI): Repo {
   };
 }
 
-/** Últimos repos públicos del usuario (sin forks) */
+/** Últimos repos públicos (sin forks) */
 export async function getPublicRepos(username: string, perPage = 12): Promise<Repo[]> {
   const res = await octokit.repos.listForUser({
     username,
     sort: "updated",
     per_page: perPage,
   });
+
+  // Tipamos sin usar `any`
   const data = res.data as unknown as RepoAPI[];
   return data.filter((r) => !r.fork).map(mapRepo);
 }
 
-/** Detalle de un repo específico */
+/** Detalle de un repo específico por nombre */
 export async function getRepo(username: string, repo: string): Promise<Repo | null> {
   try {
     const res = await octokit.repos.get({ owner: username, repo });

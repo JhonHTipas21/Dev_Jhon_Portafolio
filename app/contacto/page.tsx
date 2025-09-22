@@ -9,6 +9,7 @@ export default function ContactPage() {
     <section className="space-y-8">
       <div className="page-card p-8 md:p-12 space-y-4">
         <div className="h-1 w-16 rounded-full" style={{ background: "rgb(var(--accent))" }} />
+        {/* 👇 apóstrofo escapado */}
         <h1 className="section-title">Let&apos;s work together</h1>
         <p className="text-neutral-300">
           Escríbeme por WhatsApp o correo. También puedes usar el formulario.
