@@ -1,39 +1,75 @@
+// app/herramientas/[slug]/page.tsx
 import { tools } from "@/config/tools";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import type { Metadata } from "next";
 
-export function generateStaticParams(){
-  return tools.map(t => ({ slug: t.slug }));
+type Params = { slug: string };
+
+export function generateStaticParams(): Params[] {
+  return tools.map((t) => ({ slug: t.slug }));
 }
 
-export default function ToolDetail({ params }: { params: { slug: string } }){
-  const tool = tools.find(t => t.slug === params.slug);
-  if(!tool) return notFound();
+// (opcional) SEO dinámico por slug
+export async function generateMetadata(
+  { params }: { params: Params }
+): Promise<Metadata> {
+  const tool = tools.find((t) => t.slug === params.slug);
+  const title = tool?.name ?? params.slug.replace(/-/g, " ");
+  return { title: `Herramienta – ${title}` };
+}
+
+export default function ToolDetail({ params }: { params: Params }) {
+  const tool = tools.find((t) => t.slug === params.slug);
+  if (!tool) notFound();
+
+  // `notFound()` corta la ejecución, así que a partir de aquí `tool` existe:
+  const t = tool!;
 
   return (
     <section className="space-y-5">
-      <h1 className="section-title">{tool.name}</h1>
+      <h1 className="section-title">{t.name}</h1>
+
       <article className="card space-y-3 text-neutral-300">
-        <p>{tool.summary}</p>
-        <ul className="list-disc ms-6 space-y-1">
-          {tool.why.map((w,i)=>(<li key={i}>{w}</li>))}
-        </ul>
-        {tool.badges && (
-          <div className="flex flex-wrap gap-2 pt-2">
-            {tool.badges.map(b => <span key={b} className="badge">{b}</span>)}
-          </div>
+        <p>{t.summary}</p>
+
+        {Array.isArray(t.why) && t.why.length > 0 && (
+          <ul className="list-disc ms-6 space-y-1">
+            {t.why.map((w: string, i: number) => (
+              <li key={i}>{w}</li>
+            ))}
+          </ul>
         )}
-        {tool.links?.length ? (
+
+        {t.badges?.length ? (
+          <div className="flex flex-wrap gap-2 pt-2">
+            {t.badges.map((b: string) => (
+              <span key={b} className="badge">
+                {b}
+              </span>
+            ))}
+          </div>
+        ) : null}
+
+        {t.links?.length ? (
           <div className="pt-2">
-            {tool.links.map(l => (
-              <Link key={l.href} href={l.href} className="underline mr-4" target="_blank">
+            {t.links.map((l: { href: string; label: string }) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="underline mr-4"
+                target="_blank"
+              >
                 {l.label}
               </Link>
             ))}
           </div>
         ) : null}
       </article>
-      <Link className="underline" href="/herramientas">← Volver a herramientas</Link>
+
+      <Link className="underline" href="/herramientas">
+        ← Volver a herramientas
+      </Link>
     </section>
   );
 }
