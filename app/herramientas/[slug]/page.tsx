@@ -10,20 +10,25 @@ export function generateStaticParams(): Params[] {
   return tools.map((t) => ({ slug: t.slug }));
 }
 
-// (opcional) SEO dinámico por slug
+// Next 15: params es Promise<Params>
 export async function generateMetadata(
-  { params }: { params: Params }
+  { params }: { params: Promise<Params> }
 ): Promise<Metadata> {
-  const tool = tools.find((t) => t.slug === params.slug);
-  const title = tool?.name ?? params.slug.replace(/-/g, " ");
+  const { slug } = await params;
+  const tool = tools.find((t) => t.slug === slug);
+  const title =
+    tool?.name ?? slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return { title: `Herramienta – ${title}` };
 }
 
-export default function ToolDetail({ params }: { params: Params }) {
-  const tool = tools.find((t) => t.slug === params.slug);
+export default async function ToolDetail(
+  { params }: { params: Promise<Params> }
+) {
+  const { slug } = await params;
+
+  const tool = tools.find((t) => t.slug === slug);
   if (!tool) notFound();
 
-  // `notFound()` corta la ejecución, así que a partir de aquí `tool` existe:
   const t = tool!;
 
   return (
